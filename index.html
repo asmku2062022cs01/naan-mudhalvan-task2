@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Student Form – 10 Events</title>
+<style>
+body{
+  font-family: Arial, Helvetica, sans-serif;
+  padding:20px;
+
+  background:url("image.jpg") no-repeat center center fixed;
+  background-size:cover;
+}
+
+form{
+  max-width:500px;
+  margin:auto;
+  padding:20px;
+  background:#ffffffee;          
+  border:1px solid #ccc;
+  border-radius:10px;
+  backdrop-filter:blur(4px);     
+}
+input,
+select,
+textarea,
+button{
+  width:100%;
+  padding:8px;
+  margin-top:6px;
+  border-radius:6px;
+  border:1px solid #aaa;
+  box-sizing:border-box;
+}
+button{
+  background:#4CAF50;
+  color:#fff;
+  border:none;
+  margin-top:10px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+button:hover{
+  opacity:0.9;
+}
+
+
+#eventBox{
+  max-width:500px;
+  margin:15px auto;
+  padding:12px;
+  border:2px solid #222;
+  border-radius:8px;
+  background:#ffffffcc;
+  text-align:center;
+  font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<h2 style="text-align:center;">Student Form </h2>
+
+<form id="form">
+
+  <label>Full Name</label>
+  <input type="text" id="name">
+
+  <label>Email</label>
+  <input type="email" id="email">
+
+  <label>Phone</label>
+  <input type="tel" id="phone">
+
+  <label>Course</label>
+  <select id="course">
+    <option value="">-- Select --</option>
+    <option>HTML</option>
+    <option>CSS</option>
+    <option>JavaScript</option>
+  </select>
+
+  <label>Address</label>
+  <textarea id="address"></textarea>
+
+  <button id="submitBtn" type="submit">Submit</button>
+</form>
+
+<div id="eventBox">Event will appear here</div>
+<script>
+const form      = document.getElementById("form");
+const nameField = document.getElementById("name");
+const email     = document.getElementById("email");
+const phone     = document.getElementById("phone");
+const course    = document.getElementById("course");
+const submitBtn = document.getElementById("submitBtn");
+
+let lock = false;
+function show(text){
+  if(lock) return;
+  lock = true;
+  document.getElementById("eventBox").textContent = text;
+  setTimeout(()=> lock = false, 600); 
+}
+
+/ 10 EVENTS /
+
+//1 focus
+nameField.addEventListener("focus", ()=> show("focus — Name field selected"));
+
+//2 blur
+nameField.addEventListener("blur", ()=> show("blur — Left name field"));
+
+//3 keydown
+email.addEventListener("keydown", ()=> show("keydown — Typing in email"));
+
+//4 keyup
+email.addEventListener("keyup", ()=> show("keyup — Key released in email"));
+
+//5 change  (now clearly visible)
+course.addEventListener("change", ()=> show("change — Course selected"));
+
+//6 dblclick
+phone.addEventListener("dblclick", ()=> show("dblclick — Phone field double-clicked"));
+
+//7 mouseover (low priority)
+form.addEventListener("mouseover", ()=> show("mouseover — Mouse entered form"));
+
+//8 mouseout  (low priority)
+form.addEventListener("mouseout", ()=> show("mouseout — Mouse left form"));
+
+//9 click — show BEFORE submit
+submitBtn.addEventListener("click", (e)=>{
+  show("click — Submit button clicked");
+});
+
+//10 submit — runs slightly later so click can be seen
+form.addEventListener("submit", (e)=>{
+  e.preventDefault();
+  setTimeout(()=> show("submit — Form submitted"), 650);
+});
+</script>
